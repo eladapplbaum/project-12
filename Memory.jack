@@ -12,19 +12,32 @@
  */ 
 class Memory {
     /** Initializes the class. */
+    static Array ram;
+    static Array heap;
+    static int freeList;
+
     function void init() {
         // Pseudocode:
         // 1. freeList = heapBase
         // 2. freeList.length = heapLength
         // 3. freeList.next = null
+        let ram = 0;
+        let heap = 2048;
+        let freeList = 2048;
+        let heap[0] = 0; //next
+        let heap[1] = 14335; //length
+
     }
 
     /** Returns the RAM value at the given address. */
     function int peek(int address) {
+        return ram[address];
     }
 
     /** Sets the RAM value at the given address to the given value. */
     function void poke(int address, int value) {
+        let ram[address] = value;
+        return;
     }
 
     /** Finds an available RAM block of the given size and returns
@@ -41,6 +54,7 @@ class Memory {
         // 5. Return block
         // The figure MemoryTest/MemoryFreeListExample.png illustrates how
         // the freeList should look like.
+
     }
 
     /** De-allocates the given object (cast as an array) by making
