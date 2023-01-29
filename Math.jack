@@ -10,6 +10,7 @@
  */
 class Math {
         static Array towToThe;
+        static int temp_div; //for divide
         /** Initializes the library. */
         function void init() {
         var int i;
@@ -80,14 +81,21 @@ class Math {
             // 4.   return 2*q
             // 5. else
             // 6.   return 2*q + 1
-            var int q;
-            var int res;
-            if((y>x) | (y<0)){
-                return 0;}
-            let q = Math.divide(Math.abs(x), 2*Math.abs(y));
-            if((Math.abs(x)-2*q*Math.abs(y)) < Math.abs(y)){
-            let res =  2*q;}
-            else{let res = 2*q + 1;} 
+            var int q, res, absX, absY;
+		    let temp_div =  Math.abs(x);
+            let absX = Math.abs(x);
+            let absY = Math.abs(y);
+
+		    if (absY > absX){
+		        return 0;
+		    }
+            let temp_div = absX;
+            let q = Math.divide(absX, absY + absY);
+            if(temp_div < absY){
+                let res =  q + q;}
+            else{
+                let temp_div = temp_div - absY;
+                let res = (q+q) + 1;} 
 
             if((x > 0) = (y > 0 )){
                 return res;}
