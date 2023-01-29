@@ -14,7 +14,7 @@ class Memory {
     /** Initializes the class. */
     static Array ram;
     static Array heap;
-    static int freeList;
+    static int freeList, end;
 
     function void init() {
         // Pseudocode:
@@ -27,6 +27,7 @@ class Memory {
         let heap[0] = 0; //next
         let heap[1] = 14335; //length
 
+        return;
     }
 
     /** Returns the RAM value at the given address. */
@@ -54,7 +55,33 @@ class Memory {
         // 5. Return block
         // The figure MemoryTest/MemoryFreeListExample.png illustrates how
         // the freeList should look like.
+        var int cur_adress, cur_next, cur_length, new_adress, new_next;
 
+        let cur_adress = freeList;
+        let cur_next = ram[cur_adress];
+        let cur_length = ram[cur_adress + 1];
+
+        while (cur_length < (size + 2)){
+
+            let cur_adress = cur_next;
+            let cur_next = ram[cur_adress];
+            let cur_length = ram[cur_adress + 1];
+
+            if (cur_next > 16383){
+                return -1;
+            }
+        }
+
+        // update old list
+        let cur_length = ram[cur_adress + 1] - size;
+        let ram[cur_adress + 1] = cur_length;
+
+        // update new list
+        let new_adress = cur_adress + 2 + cur_length;
+        let new_next = 0;
+        let ram[new_adress + 1] = size;
+
+        return new_adress + 2;
     }
 
     /** De-allocates the given object (cast as an array) by making
@@ -63,11 +90,34 @@ class Memory {
         // Pseudocode:
         // 1. segment = o - 1
         // 2. Insert segment into the freeList
+        var Array segment;
+        
+        let segment = o - 1;
+        let mem[o] = mem[freeList + 1];
+        let mem [freeList + 1] = segment;
+
+        return;
     }    
 
     /** Returns the maximal element contained in the given Array/object. 
      *  Assume inputs are initialized and contain at least one element. */
     function int max(Array o) {
+        var int max, length, index;
+
+        let max = o[0];
+        let length = o[-1] - 1;
+
+        let index = 1;
+        while(index < length){
+
+            if (o[index] > max){
+                let max = o[index];
+                }
+            let index = index+1;
+            }
+
+        return max;
+        }
         // Hint: the algorithm you need to implement in Memory.alloc saves the
         // size of the allocated block in the memory cell right before the 
         // start of the block, and this can be used to implement Memory.max.
